@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<style>
+	body {
+		margin: 0px;
+		padding: 0px;
+	}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="500" height="500" style="background:green;"></canvas>
+	<script src="plot.js"></script>
+	<script>
+	var data = new Array();
+	for(var i = 0; i < 360; i++)
+	{
+		data.push([
+			16*Math.pow(Math.sin(i*Math.PI/180),3), 
+			13*Math.cos(i*Math.PI/180) - 5*Math.cos(2*i*Math.PI/180) - 2*Math.cos(3*i*Math.PI/180) - Math.cos(4*i*Math.PI/180)
+			]);
+	}
+	Plot(data,"myCanvas",500,500);
+	</script>
+</body>
+</html>
