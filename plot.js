@@ -19,18 +19,18 @@ function Plot(data,canvas_id,canvas_width,canvas_height)
 			extremaY_delta = bound.max_y - bound.min_y;
 			extremaX_delta = bound.max_x - bound.min_x;
 			reverse_min_x = -1*bound.min_x;
-			reverse_max_y = -1*bound.max_y;
+			reverse_min_y = -1*bound.min_y;
 
 			if (width < height) {
 				if (extremaX_delta > 0) {
 					scale = (0.9*width)/extremaX_delta; // 90% of canvas width
 					shift_x = 0.05*width;					// 5% of canvas width
-					shift_y = (height/2) - (0.5*extremaY_delta*scale);
+					shift_y = (height/2) + (0.5*extremaY_delta*scale);
 				}
 			} else {
 				if (extremaY_delta > 0) {
 					scale = (0.9*height)/extremaY_delta;
-					shift_y = 0.05*height;
+					shift_y = 0.95*height;// + (0.5*extremaY_delta*scale);
 					shift_x = (width/2) - (0.5*extremaX_delta*scale);
 				}
 			}
@@ -39,7 +39,7 @@ function Plot(data,canvas_id,canvas_width,canvas_height)
 			var context = canvas.getContext('2d');
 
 			var x = shift_x + (reverse_min_x + parseFloat(data[0][0]))*scale;
-			var y = shift_y + -1*(reverse_max_y + parseFloat(data[0][1]))*scale;
+			var y = shift_y + -1*(reverse_min_y + parseFloat(data[0][1]))*scale;
 
 			context.beginPath();
 			context.moveTo(x,y);
@@ -47,10 +47,10 @@ function Plot(data,canvas_id,canvas_width,canvas_height)
 			for( var i = 0; i < data.length; i++)
 			{
 				x = shift_x + (reverse_min_x + parseFloat(data[i][0]))*scale;
-				y = shift_y + -1*(reverse_max_y + parseFloat(data[i][1]))*scale;
-				context.lineTo(x,y);
+				y = shift_y + -1*(reverse_min_y + parseFloat(data[i][1]))*scale;
 
 				console.log({x :x,y :y});
+				context.lineTo(x,y);
 			}
 
 			context.lineWidth = 2;
